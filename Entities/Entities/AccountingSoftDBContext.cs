@@ -24,6 +24,8 @@ namespace Entities.Entities
         public virtual DbSet<TblReport> TblReports { get; set; } = null!;
         public virtual DbSet<TblRole> TblRoles { get; set; } = null!;
         public virtual DbSet<TblSeatApproval> TblSeatApprovals { get; set; } = null!;
+        public virtual DbSet<TblSeat> TblSeat { get; set; } = null!;
+        public virtual DbSet<TblSeatDetail> TblSeatDetail { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -351,6 +353,46 @@ namespace Entities.Entities
                     .HasConstraintName("FK__tblSeatAp__SEAT___4CA06362");
             });
 
+            modelBuilder.Entity<TblSeat>(entity =>
+            {
+
+                entity.ToTable("tblSeat");
+
+                entity.Property(e => e.ID).HasColumnName("ID").ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CURRENCY)
+                    .HasColumnName("CURRENCY");
+
+                entity.Property(e => e.EXCHANGE_RATE)
+                   .HasColumnName("EXCHANGE_RATE");
+
+                entity.Property(e => e.REFERENCE)
+                    .HasColumnName("REFERENCE");
+
+                entity.Property(e => e.STATUS)
+                    .HasColumnName("STATUS");
+            });
+
+            modelBuilder.Entity<TblSeatDetail>(entity =>
+            {
+
+                entity.ToTable("tblSeatDetail");
+
+                entity.Property(e => e.ID).HasColumnName("ID").ValueGeneratedOnAdd();
+
+                entity.Property(e => e.SEAT_ID)
+                    .HasColumnName("SEAT_ID");
+
+                entity.Property(e => e.ACCOUNT_ID)
+                    .HasColumnName("ACCOUNT_ID");
+
+                entity.Property(e => e.AMOUNT)
+                   .HasColumnName("AMOUNT");
+
+                entity.Property(e => e.DESCRIPTION)
+                    .HasColumnName("DESCRIPTION");
+
+            });
 
             OnModelCreatingPartial(modelBuilder);
         }
