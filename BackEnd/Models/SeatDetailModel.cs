@@ -1,4 +1,4 @@
-﻿namespace Entities.Entities
+﻿namespace BackEnd.Models
 {
     public class SeatDetailModel
     {

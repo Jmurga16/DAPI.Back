@@ -1,9 +1,9 @@
-﻿namespace Entities.Entities
+﻿namespace BackEnd.Models
 {
     public class SeatModel
     {
         public int? ID { get; set; }
-        public string DATE_SEAT { get; set; } = String.Empty;
+        public DateTime DATE_SEAT { get; set; }
         public string CURRENCY { get; set; } = String.Empty;
         public decimal? EXCHANGE_RATE { get; set; }
         public string REFERENCE { get; set; } = String.Empty;
