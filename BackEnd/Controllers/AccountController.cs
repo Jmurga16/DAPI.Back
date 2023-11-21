@@ -3,7 +3,7 @@ using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace BackEnd.Controllers
 {
@@ -37,6 +37,14 @@ namespace BackEnd.Controllers
             };
         }
 
+        AccountSelectResponseModel ConvertToSelect(TblAccountCatalog account)
+        {
+            return new AccountSelectResponseModel
+            {
+                id = account.AccountId,
+                text = account.AccountCode + " | " + account.AccountName,        
+            };
+        }
 
         public AccountController()
         {
@@ -65,8 +73,6 @@ namespace BackEnd.Controllers
             return new JsonResult(Convert(account));
         }
 
-
-
         [HttpPost]
         public JsonResult Post([FromBody] AccountModel account)
         {
@@ -74,8 +80,6 @@ namespace BackEnd.Controllers
             accountDAL.Add(entity);
             return new JsonResult(Convert(entity));
         }
-
-
 
         [HttpPut]
         public JsonResult Put([FromBody] AccountModel account)
@@ -85,8 +89,6 @@ namespace BackEnd.Controllers
             return new JsonResult(Convert(entity));
         }
 
-
-
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -94,6 +96,28 @@ namespace BackEnd.Controllers
             accountDAL.Remove(account);
             return new JsonResult(account);
         }
+
+        [HttpGet("Select")]
+        public JsonResult GetSelect()
+        {
+            List<TblAccountCatalog> accounts = new List<TblAccountCatalog>();
+            accounts = accountDAL.GetAll().ToList();
+
+            List<AccountSelectResponseModel> result = new List<AccountSelectResponseModel>();
+            foreach (TblAccountCatalog account in accounts)
+            {
+                result.Add(ConvertToSelect(account));
+            }
+
+            var response = new
+            {
+                results = result
+            };
+            
+            return new JsonResult(response);
+        }
+
+
     }
 }
 

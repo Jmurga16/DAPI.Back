@@ -22,9 +22,11 @@ namespace BackEnd.Controllers
             return new TblSeat
             {
                 ID = entity.ID,
+                DATE_SEAT = entity.DATE_SEAT,
                 CURRENCY = entity.CURRENCY,
                 EXCHANGE_RATE = entity.EXCHANGE_RATE,
                 REFERENCE = entity.REFERENCE,
+                CUSTOMER_ID = entity.CUSTOMER_ID,
                 STATUS = entity.STATUS
             };
         }
@@ -34,9 +36,11 @@ namespace BackEnd.Controllers
             return new SeatModel
             {
                 ID = entity.ID,
+                DATE_SEAT = entity.DATE_SEAT,
                 CURRENCY = entity.CURRENCY,
                 EXCHANGE_RATE = entity.EXCHANGE_RATE,
                 REFERENCE = entity.REFERENCE,
+                CUSTOMER_ID = entity.CUSTOMER_ID,
                 STATUS = entity.STATUS
             };
         }

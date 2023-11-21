@@ -360,6 +360,9 @@ namespace Entities.Entities
 
                 entity.Property(e => e.ID).HasColumnName("ID").ValueGeneratedOnAdd();
 
+                entity.Property(e => e.DATE_SEAT)
+                    .HasColumnName("DATE_SEAT");
+
                 entity.Property(e => e.CURRENCY)
                     .HasColumnName("CURRENCY");
 
@@ -368,6 +371,9 @@ namespace Entities.Entities
 
                 entity.Property(e => e.REFERENCE)
                     .HasColumnName("REFERENCE");
+
+                entity.Property(e => e.CUSTOMER_ID)
+                    .HasColumnName("CUSTOMER_ID");
 
                 entity.Property(e => e.STATUS)
                     .HasColumnName("STATUS");
