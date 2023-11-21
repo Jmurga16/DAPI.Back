@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Entities.Entities
+﻿namespace Entities.Entities
 {
     public partial class TblAccountCatalog
     {
@@ -13,8 +10,9 @@ namespace Entities.Entities
 
         public int AccountId { get; set; }
         public string AccountName { get; set; } = null!;
+        public string AccountCode { get; set; } = null!;
         public string AccountType { get; set; } = null!;
-        public bool Conversion { get; set; }
+        public int Conversion { get; set; }
 
         public virtual ICollection<TblAccountingSeat> TblAccountingSeats { get; set; }
         public virtual ICollection<TblReport> TblReports { get; set; }

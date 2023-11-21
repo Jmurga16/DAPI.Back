@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Entities.Entities
 {
@@ -32,11 +29,10 @@ namespace Entities.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("Server=.;Database=AccountingSoftDB;Integrated Security=True;User ID=SA;Password=Aljimo**04;Trusted_Connection=False;");
                 optionsBuilder.UseSqlServer("Server=.;Database=AccountingSoftDB;Integrated Security=True;");
             }
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,17 +43,23 @@ namespace Entities.Entities
 
                 entity.ToTable("tblAccountCatalog");
 
-                entity.Property(e => e.AccountId).HasColumnName("ACCOUNT_ID");
+                entity.Property(e => e.AccountId).HasColumnName("ACCOUNT_ID").ValueGeneratedOnAdd();
+
 
                 entity.Property(e => e.AccountName)
                     .HasMaxLength(50)
                     .HasColumnName("ACCOUNT_NAME");
 
+                entity.Property(e => e.AccountCode)
+                   .HasMaxLength(50)
+                   .HasColumnName("ACCOUNT_CODE");
+
                 entity.Property(e => e.AccountType)
                     .HasMaxLength(50)
                     .HasColumnName("ACCOUNT_TYPE");
 
-                entity.Property(e => e.Conversion).HasColumnName("CONVERSION");
+                entity.Property(e => e.Conversion)
+                    .HasColumnName("CONVERSION");
             });
 
             modelBuilder.Entity<TblAccountingSeat>(entity =>
@@ -348,6 +350,7 @@ namespace Entities.Entities
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tblSeatAp__SEAT___4CA06362");
             });
+
 
             OnModelCreatingPartial(modelBuilder);
         }

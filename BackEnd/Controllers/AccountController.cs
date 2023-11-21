@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using DAL.Interfaces;
+﻿using BackEnd.Models;
 using DAL.Implementations;
+using DAL.Interfaces;
 using Entities.Entities;
-using BackEnd.Models;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BackEnd.Controllers
 {
@@ -24,6 +19,7 @@ namespace BackEnd.Controllers
             {
                 AccountId = account.AccountId,
                 AccountName = account.AccountName,
+                AccountCode = account.AccountCode,
                 AccountType = account.AccountType,
                 Conversion = account.Conversion
             };
@@ -35,18 +31,19 @@ namespace BackEnd.Controllers
             {
                 AccountId = account.AccountId,
                 AccountName = account.AccountName,
+                AccountCode = account.AccountCode,
                 AccountType = account.AccountType,
                 Conversion = account.Conversion
             };
         }
 
-        
+
         public AccountController()
         {
             accountDAL = new AccountDALImpl(new AccountingSoftDBContext());
         }
 
-        
+
         [HttpGet]
         public JsonResult Get()
         {
@@ -67,9 +64,9 @@ namespace BackEnd.Controllers
             TblAccountCatalog account = accountDAL.Get(id);
             return new JsonResult(Convert(account));
         }
-        
 
-        
+
+
         [HttpPost]
         public JsonResult Post([FromBody] AccountModel account)
         {
@@ -77,9 +74,9 @@ namespace BackEnd.Controllers
             accountDAL.Add(entity);
             return new JsonResult(Convert(entity));
         }
-        
 
-        
+
+
         [HttpPut]
         public JsonResult Put([FromBody] AccountModel account)
         {
@@ -87,9 +84,9 @@ namespace BackEnd.Controllers
             accountDAL.Update(entity);
             return new JsonResult(Convert(entity));
         }
-        
 
-        
+
+
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {

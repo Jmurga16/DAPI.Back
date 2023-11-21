@@ -1,12 +1,15 @@
-﻿using System;
+﻿using System.Text.Json.Serialization;
+
 namespace BackEnd.Models
 {
-	public class AccountModel
+    public class AccountModel
     {
+        [JsonIgnore]
         public int AccountId { get; set; }
         public string AccountName { get; set; } = null!;
+        public string AccountCode { get; set; } = String.Empty;
         public string AccountType { get; set; } = null!;
-        public bool Conversion { get; set; }
+        public int Conversion { get; set; }
     }
 }
 
