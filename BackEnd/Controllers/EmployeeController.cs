@@ -1,8 +1,12 @@
-﻿using BackEnd.Models;
-using DAL.Implementations;
-using DAL.Interfaces;
-using Entities.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using DAL.Interfaces;
+using DAL.Implementations;
+using Entities.Entities;
+using BackEnd.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,7 +17,7 @@ namespace BackEnd.Controllers
     public class EmployeeController : ControllerBase
     {
         private IEmployeeDAL employeeDAL;
-        //private IEnumerable<TblEmployee> employees;
+        private IEnumerable<TblEmployee> employees;
 
         TblEmployee Convert(EmployeeModel employee)
         {

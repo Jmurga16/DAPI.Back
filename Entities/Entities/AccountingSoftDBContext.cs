@@ -17,12 +17,10 @@ namespace Entities.Entities
         public virtual DbSet<TblAccountingSeat> TblAccountingSeats { get; set; } = null!;
         public virtual DbSet<TblAllocation> TblAllocations { get; set; } = null!;
         public virtual DbSet<TblCustomer> TblCustomers { get; set; } = null!;
-        public virtual DbSet<TblDepartment> TblDepartments { get; set; } = null!;
         public virtual DbSet<TblEmployee> TblEmployees { get; set; } = null!;
         public virtual DbSet<TblIdType> TblIdTypes { get; set; } = null!;
         public virtual DbSet<TblLog> TblLogs { get; set; } = null!;
-        public virtual DbSet<TblReport> TblReports { get; set; } = null!;
-        public virtual DbSet<TblRole> TblRoles { get; set; } = null!;
+        public virtual DbSet<TblReport> TblReports { get; set; } = null!;  
         public virtual DbSet<TblSeatApproval> TblSeatApprovals { get; set; } = null!;
         public virtual DbSet<TblSeat> TblSeat { get; set; } = null!;
         public virtual DbSet<TblSeatDetail> TblSeatDetail { get; set; } = null!;
@@ -167,52 +165,36 @@ namespace Entities.Entities
                     .HasConstraintName("FK__tblCustom__ID_TY__412EB0B6");
             });
 
-            modelBuilder.Entity<TblDepartment>(entity =>
-            {
-                entity.HasKey(e => e.DepartmentId)
-                    .HasName("PK__tblDepar__63E613629DEAF38F");
-
-                entity.ToTable("tblDepartments");
-
-                entity.Property(e => e.DepartmentId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("DEPARTMENT_ID");
-
-                entity.Property(e => e.DepartmentDescription)
-                    .HasMaxLength(50)
-                    .HasColumnName("DEPARTMENT_DESCRIPTION");
-            });
-
             modelBuilder.Entity<TblEmployee>(entity =>
             {
                 entity.HasKey(e => e.EmployeeId)
-                    .HasName("PK__tblEmplo__CBA14F48F70F7117");
+                    .HasName("PK__tblEmplo__CBA14F4870A2C682");
 
                 entity.ToTable("tblEmployees");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 
-                entity.Property(e => e.EmailAddress)
-                    .HasMaxLength(255)
-                    .HasColumnName("EMAIL_ADDRESS");
-
                 entity.Property(e => e.FirstName)
-                    .HasMaxLength(25)
+                    .HasMaxLength(50)
                     .HasColumnName("FIRST_NAME");
 
                 entity.Property(e => e.LastName)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .HasColumnName("LAST_NAME");
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(20)
-                    .HasColumnName("PASSWORD");
-
                 entity.Property(e => e.Username)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
                     .HasColumnName("USERNAME");
 
-                   
+                entity.Property(e => e.EmailAddress)
+                    .HasMaxLength(510)
+                    .HasColumnName("EMAIL_ADDRESS");
+                                
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .HasColumnName("PASSWORD");
+                                                 
             });
 
             modelBuilder.Entity<TblIdType>(entity =>
@@ -297,22 +279,6 @@ namespace Entities.Entities
                     .HasForeignKey(d => d.SeatId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tblReport__SEAT___4F7CD00D");
-            });
-
-            modelBuilder.Entity<TblRole>(entity =>
-            {
-                entity.HasKey(e => e.RoleId)
-                    .HasName("PK__tblRoles__5AC4D222B47C11D3");
-
-                entity.ToTable("tblRoles");
-
-                entity.Property(e => e.RoleId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.RoleDescription)
-                    .HasMaxLength(50)
-                    .HasColumnName("ROLE_DESCRIPTION");
             });
 
             modelBuilder.Entity<TblSeatApproval>(entity =>

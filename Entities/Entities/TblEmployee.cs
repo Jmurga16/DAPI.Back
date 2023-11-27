@@ -18,8 +18,6 @@ namespace Entities.Entities
         public string EmailAddress { get; set; } = null!;
         public string Password { get; set; } = null!;
 
-        public virtual TblDepartment Department { get; set; } = null!;
-        public virtual TblRole Role { get; set; } = null!;
         public virtual ICollection<TblAllocation> TblAllocations { get; set; }
         public virtual ICollection<TblLog> TblLogs { get; set; }
     }
