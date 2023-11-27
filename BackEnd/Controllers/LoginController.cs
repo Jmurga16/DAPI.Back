@@ -19,7 +19,7 @@ namespace BackEnd.Controllers
             {
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
-                UserPassword = employee.UserPassword
+                Password = employee.Password
             };
         }
 
@@ -29,7 +29,7 @@ namespace BackEnd.Controllers
             {
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
-                UserPassword = employee.UserPassword
+                Password = employee.Password
             };
         }
 

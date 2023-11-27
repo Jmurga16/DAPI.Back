@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using DAL.Interfaces;
+﻿using BackEnd.Models;
 using DAL.Implementations;
+using DAL.Interfaces;
 using Entities.Entities;
-using BackEnd.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,21 +13,18 @@ namespace BackEnd.Controllers
     public class EmployeeController : ControllerBase
     {
         private IEmployeeDAL employeeDAL;
+        //private IEnumerable<TblEmployee> employees;
 
         TblEmployee Convert(EmployeeModel employee)
         {
             return new TblEmployee
             {
                 EmployeeId = employee.EmployeeId,
-                RoleId = employee.RoleId,
-                DepartmentId = employee.DepartmentId,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                Identification = employee.Identification,
-                Genre = employee.Genre,
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
-                UserPassword = employee.UserPassword
+                Password = employee.Password,
             };
         }
 
@@ -40,27 +33,20 @@ namespace BackEnd.Controllers
             return new EmployeeModel
             {
                 EmployeeId = employee.EmployeeId,
-                RoleId = employee.RoleId,
-                DepartmentId = employee.DepartmentId,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                Identification = employee.Identification,
-                Genre = employee.Genre,
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
-                UserPassword = employee.UserPassword
+                Password = employee.Password,
             };
         }
 
-        #region Constructor
         public EmployeeController()
         {
             employeeDAL = new EmployeeDALImpl(new AccountingSoftDBContext());
         }
 
-        #endregion
 
-        #region Consulta
         [HttpGet]
         public JsonResult Get()
         {
@@ -81,9 +67,9 @@ namespace BackEnd.Controllers
             TblEmployee employee = employeeDAL.Get(id);
             return new JsonResult(Convert(employee));
         }
-        #endregion
 
-        #region Agregar
+
+
         [HttpPost]
         public JsonResult Post([FromBody] EmployeeModel employee)
         {
@@ -91,9 +77,9 @@ namespace BackEnd.Controllers
             employeeDAL.Add(entity);
             return new JsonResult(Convert(entity));
         }
-        #endregion
 
-        #region Modificar
+
+
         [HttpPut]
         public JsonResult Put([FromBody] EmployeeModel employee)
         {
@@ -101,9 +87,9 @@ namespace BackEnd.Controllers
             employeeDAL.Update(entity);
             return new JsonResult(Convert(entity));
         }
-        #endregion
 
-        #region Eliminar
+
+
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -111,7 +97,5 @@ namespace BackEnd.Controllers
             employeeDAL.Remove(employee);
             return new JsonResult(employee);
         }
-        #endregion
     }
 }
-

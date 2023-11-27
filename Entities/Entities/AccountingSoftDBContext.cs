@@ -31,7 +31,7 @@ namespace Entities.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=AccountingSoftDB;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:proyectorg.database.windows.net,1433;Initial Catalog=DB_RG;Persist Security Info=False;User ID=master;Password=proyectorg23*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -192,8 +192,6 @@ namespace Entities.Entities
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 
-                entity.Property(e => e.DepartmentId).HasColumnName("DEPARTMENT_ID");
-
                 entity.Property(e => e.EmailAddress)
                     .HasMaxLength(255)
                     .HasColumnName("EMAIL_ADDRESS");
@@ -202,35 +200,19 @@ namespace Entities.Entities
                     .HasMaxLength(25)
                     .HasColumnName("FIRST_NAME");
 
-                entity.Property(e => e.Genre).HasColumnName("GENRE");
-
-                entity.Property(e => e.Identification).HasColumnName("IDENTIFICATION");
-
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
                     .HasColumnName("LAST_NAME");
 
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserPassword)
+                entity.Property(e => e.Password)
                     .HasMaxLength(20)
-                    .HasColumnName("USER_PASSWORD");
+                    .HasColumnName("PASSWORD");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .HasColumnName("USERNAME");
 
-                entity.HasOne(d => d.Department)
-                    .WithMany(p => p.TblEmployees)
-                    .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEmploy__DEPAR__3E52440B");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.TblEmployees)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblEmploy__ROLE___3D5E1FD2");
+                   
             });
 
             modelBuilder.Entity<TblIdType>(entity =>

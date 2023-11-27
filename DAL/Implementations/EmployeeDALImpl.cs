@@ -63,8 +63,9 @@ namespace DAL.Implementations
                 }
                 return employees;
             }
-            catch
+            catch(Exception ex)  
             {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
