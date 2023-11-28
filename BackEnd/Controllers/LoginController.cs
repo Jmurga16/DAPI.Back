@@ -4,6 +4,8 @@ using DAL.Interfaces;
 using Entities.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Mail;
 
 namespace BackEnd.Controllers
 {
@@ -62,6 +64,31 @@ namespace BackEnd.Controllers
             TblEmployee employee = employeeDAL.Get(id);
             return new JsonResult(Convert(employee));
         }
+
+
+        [HttpPost("auth")]
+        public JsonResult Post([FromBody] LoginModel login)
+        {
+            bool result = false;
+            var IdEmployee = 0;
+
+            List<TblEmployee> employees = new List<TblEmployee>();
+            employees = employeeDAL.GetAll().ToList();
+
+            foreach (TblEmployee employee in employees)
+            {
+                Console.WriteLine(employee);
+                if (employee.Username == login.username && employee.Password == login.password)
+                {
+                    IdEmployee = employee.EmployeeId;
+                    result = true;
+                }
+            }
+
+            return new JsonResult(new { success = result, employeeId = IdEmployee });
+
+        }
+
     }
 }
 #endregion
