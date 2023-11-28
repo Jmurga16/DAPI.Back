@@ -57,12 +57,7 @@ namespace BackEnd.Controllers
             List<TblAccountCatalog> accounts = new List<TblAccountCatalog>();
             accounts = accountDAL.GetAll().ToList();
 
-            List<AccountModel> result = new List<AccountModel>();
-            foreach (TblAccountCatalog account in accounts)
-            {
-                result.Add(Convert(account));
-            }
-            return new JsonResult(result);
+            return new JsonResult(accounts);
         }
 
         [HttpGet("{id}")]

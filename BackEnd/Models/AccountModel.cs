@@ -3,8 +3,7 @@
 namespace BackEnd.Models
 {
     public class AccountModel
-    {
-        [JsonIgnore]
+    { 
         public int AccountId { get; set; }
         public string AccountName { get; set; } = null!;
         public string AccountCode { get; set; } = String.Empty;
