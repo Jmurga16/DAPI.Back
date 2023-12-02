@@ -20,7 +20,8 @@ namespace BackEnd.Controllers
                 AccountName = account.AccountName,
                 AccountCode = account.AccountCode,
                 AccountType = account.AccountType,
-                Conversion = account.Conversion
+                Conversion = account.Conversion,
+                Active = account.Active,
             };
         }
 
@@ -32,7 +33,8 @@ namespace BackEnd.Controllers
                 AccountName = account.AccountName,
                 AccountCode = account.AccountCode,
                 AccountType = account.AccountType,
-                Conversion = account.Conversion
+                Conversion = account.Conversion,
+                Active = account.Active,
             };
         }
 
@@ -41,7 +43,7 @@ namespace BackEnd.Controllers
             return new AccountSelectResponseModel
             {
                 id = account.AccountId,
-                text = account.AccountCode + " | " + account.AccountName,        
+                text = account.AccountCode + " | " + account.AccountName,
             };
         }
 
@@ -55,7 +57,7 @@ namespace BackEnd.Controllers
         public JsonResult Get()
         {
             List<TblAccountCatalog> accounts = new List<TblAccountCatalog>();
-            accounts = accountDAL.GetAll().ToList();
+            accounts = accountDAL.GetAll().Where(a => a.Active).ToList();
 
             return new JsonResult(accounts);
         }
@@ -86,9 +88,9 @@ namespace BackEnd.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            TblAccountCatalog account = new TblAccountCatalog { AccountId = id };
-            accountDAL.Remove(account);
-            return new JsonResult(account);
+            var success = accountDAL.Delete(id);
+
+            return new JsonResult(success);
         }
 
         [HttpGet("Select")]
@@ -107,7 +109,7 @@ namespace BackEnd.Controllers
             {
                 results = result
             };
-            
+
             return new JsonResult(response);
         }
 

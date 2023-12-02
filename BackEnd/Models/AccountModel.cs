@@ -9,6 +9,7 @@ namespace BackEnd.Models
         public string AccountCode { get; set; } = String.Empty;
         public string AccountType { get; set; } = null!;
         public int Conversion { get; set; }
+        public bool Active { get; set; }
     }
 }
 

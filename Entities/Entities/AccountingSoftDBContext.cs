@@ -20,7 +20,7 @@ namespace Entities.Entities
         public virtual DbSet<TblEmployee> TblEmployees { get; set; } = null!;
         public virtual DbSet<TblIdType> TblIdTypes { get; set; } = null!;
         public virtual DbSet<TblLog> TblLogs { get; set; } = null!;
-        public virtual DbSet<TblReport> TblReports { get; set; } = null!;  
+        public virtual DbSet<TblReport> TblReports { get; set; } = null!;
         public virtual DbSet<TblSeatApproval> TblSeatApprovals { get; set; } = null!;
         public virtual DbSet<TblSeat> TblSeat { get; set; } = null!;
         public virtual DbSet<TblSeatDetail> TblSeatDetail { get; set; } = null!;
@@ -60,6 +60,10 @@ namespace Entities.Entities
 
                 entity.Property(e => e.Conversion)
                     .HasColumnName("CONVERSION");
+
+                entity.Property(e => e.Active)
+                    .HasColumnName("ACTIVE");
+
             });
 
             modelBuilder.Entity<TblAccountingSeat>(entity =>
@@ -92,17 +96,6 @@ namespace Entities.Entities
                     .HasColumnType("decimal(18, 0)")
                     .HasColumnName("SEAT_VALUE");
 
-                entity.HasOne(d => d.Account)
-                    .WithMany(p => p.TblAccountingSeats)
-                    .HasForeignKey(d => d.AccountId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblAccoun__ACCOU__45F365D3");
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.TblAccountingSeats)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblAccoun__CUSTO__46E78A0C");
             });
 
             modelBuilder.Entity<TblAllocation>(entity =>
@@ -189,12 +182,12 @@ namespace Entities.Entities
                 entity.Property(e => e.EmailAddress)
                     .HasMaxLength(510)
                     .HasColumnName("EMAIL_ADDRESS");
-                                
+
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
                     .HasColumnName("PASSWORD");
-                                                 
+
             });
 
             modelBuilder.Entity<TblIdType>(entity =>
@@ -268,11 +261,6 @@ namespace Entities.Entities
 
                 entity.Property(e => e.SeatId).HasColumnName("SEAT_ID");
 
-                entity.HasOne(d => d.Account)
-                    .WithMany(p => p.TblReports)
-                    .HasForeignKey(d => d.AccountId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__tblReport__ACCOU__5070F446");
 
                 entity.HasOne(d => d.Seat)
                     .WithMany(p => p.TblReports)

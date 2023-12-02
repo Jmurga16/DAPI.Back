@@ -75,6 +75,23 @@ namespace DAL.Implementations
                 return false; ;
             }
         }
+
+        public bool Delete(int id)
+        {
+            TEntity entity = Context.Set<TEntity>().Find(id);
+
+            try
+            {
+                Context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                return true;
+            }
+            catch
+            {
+                return false; ;
+            }
+        }
+
+
     }
 }
 

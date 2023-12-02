@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using DAL.Interfaces;
 using Entities.Entities;
 
@@ -104,6 +105,31 @@ namespace DAL.Implementations
             }
             return result;
         }
+
+        public bool Delete(int id)
+        {
+            bool result = false;
+            TblAccountCatalog entity;
+            
+            try
+            {                
+                using (WorkUnit<TblAccountCatalog> unit = new WorkUnit<TblAccountCatalog>(context))
+                {
+                    entity = unit.genericDAL.Get(id);
+                    entity.Active = false;
+
+                    unit.genericDAL.Update(entity);
+                    result = unit.Complete();
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
+
     }
 }
 

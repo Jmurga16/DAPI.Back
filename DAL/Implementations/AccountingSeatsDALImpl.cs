@@ -43,6 +43,7 @@ namespace DAL.Implementations
                 using (WorkUnit<TblAccountingSeat> unit = new WorkUnit<TblAccountingSeat>(context))
                 {
                     a_Seats = unit.genericDAL.Get(id);
+                    unit.Dispose();
                 }
                 return a_Seats;
             }
@@ -96,6 +97,27 @@ namespace DAL.Implementations
                 {
                     unit.genericDAL.Update(entity);
                     result = unit.Complete();
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool Delete(int id)
+        {
+            bool result = false;
+            TblAccountingSeat entity = Get(id);
+            //entity.Active = false;
+            try
+            {
+                using (WorkUnit<TblAccountingSeat> unit = new WorkUnit<TblAccountingSeat>(context))
+                {
+                    unit.genericDAL.Update(entity);
+                    result = unit.Complete();
+                    
                 }
             }
             catch

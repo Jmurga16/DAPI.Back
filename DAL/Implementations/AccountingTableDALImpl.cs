@@ -106,6 +106,27 @@ namespace DAL.Implementations
             }
             return result;
         }
+
+        public bool Delete(int id)
+        {
+            bool result = false;
+            TblAccountingTable entity = Get(id);
+            //entity.Active = false;
+            try
+            {
+                using (WorkUnit<TblAccountingTable> unit = new WorkUnit<TblAccountingTable>(context))
+                {
+                    unit.genericDAL.Update(entity);
+                    result = unit.Complete();
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
     }
 }
 

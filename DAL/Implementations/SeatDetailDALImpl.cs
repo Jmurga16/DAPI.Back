@@ -103,5 +103,28 @@ namespace DAL.Implementations
             }
             return result;
         }
+                
+        public bool Delete(int id)
+        {
+            bool result = false;
+            TblSeatDetail entity = Get(id);
+            //entity.Active = false;
+
+            try
+            {
+                using (WorkUnit<TblSeatDetail> unit = new WorkUnit<TblSeatDetail>(context))
+                {
+                    unit.genericDAL.Update(entity);
+                    result = unit.Complete();
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
+
     }
 }
