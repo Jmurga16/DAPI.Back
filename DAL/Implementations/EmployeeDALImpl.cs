@@ -110,12 +110,15 @@ namespace DAL.Implementations
         public bool Delete(int id)
         {
             bool result = false;
-            TblEmployee entity = Get(id);
-            //entity.Active = false;
+            TblEmployee entity;
+            
             try
             {
                 using (WorkUnit<TblEmployee> unit = new WorkUnit<TblEmployee>(context))
                 {
+                    entity = unit.genericDAL.Get(id);
+                    entity.Active = false;
+
                     unit.genericDAL.Update(entity);
                     result = unit.Complete();
                 }

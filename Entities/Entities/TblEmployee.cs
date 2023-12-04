@@ -17,6 +17,7 @@ namespace Entities.Entities
         public string Username { get; set; } = null!;
         public string EmailAddress { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public bool Active { get; set; }
 
         public virtual ICollection<TblAllocation> TblAllocations { get; set; }
         public virtual ICollection<TblLog> TblLogs { get; set; }

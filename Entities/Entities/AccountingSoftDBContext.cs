@@ -188,6 +188,9 @@ namespace Entities.Entities
                     .HasMaxLength(100)
                     .HasColumnName("PASSWORD");
 
+                entity.Property(e => e.Active)
+                        .HasColumnName("ACTIVE");
+
             });
 
             modelBuilder.Entity<TblIdType>(entity =>

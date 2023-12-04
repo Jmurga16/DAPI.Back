@@ -29,6 +29,7 @@ namespace BackEnd.Controllers
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
                 Password = employee.Password,
+                Active = employee.Active,
             };
         }
 
@@ -42,6 +43,8 @@ namespace BackEnd.Controllers
                 Username = employee.Username,
                 EmailAddress = employee.EmailAddress,
                 Password = employee.Password,
+                Active = employee.Active,
+
             };
         }
 
@@ -54,15 +57,11 @@ namespace BackEnd.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            List<TblEmployee> employees = new List<TblEmployee>();
-            employees = employeeDAL.GetAll().ToList();
 
-            List<EmployeeModel> result = new List<EmployeeModel>();
-            foreach (TblEmployee employee in employees)
-            {
-                result.Add(Convert(employee));
-            }
-            return new JsonResult(result);
+            List<TblEmployee> employees = new List<TblEmployee>();
+            employees = employeeDAL.GetAll().Where(a => a.Active).ToList();
+
+            return new JsonResult(employees);
         }
 
         [HttpGet("{id}")]
@@ -97,9 +96,12 @@ namespace BackEnd.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
+            
             TblEmployee employee = new TblEmployee { EmployeeId = id };
-            employeeDAL.Remove(employee);
+            employeeDAL.Delete(id);
+
             return new JsonResult(employee);
+
         }
     }
 }
