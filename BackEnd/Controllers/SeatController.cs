@@ -51,7 +51,8 @@ namespace BackEnd.Controllers
         public JsonResult Get()
         {
             List<TblSeat> seats = new List<TblSeat>();
-            seats = seatDAL.GetAll().ToList();
+
+            seats = seatDAL.GetAll().Where(a => a.STATUS).ToList();
 
             List<SeatModel> result = new List<SeatModel>();
             foreach (TblSeat seat in seats)
@@ -88,10 +89,20 @@ namespace BackEnd.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            TblSeat seat = new TblSeat { ID = id };
-            seatDAL.Remove(seat);
-            return new JsonResult(seat);
+            var success = seatDAL.Delete(id);
+
+            return new JsonResult(success);
         }
+
+
+        [HttpPost("Post/{id}")]
+        public JsonResult Postear(int id)
+        {
+            var success = seatDAL.Post(id);
+
+            return new JsonResult(success);
+        }
+
 
         #endregion
 

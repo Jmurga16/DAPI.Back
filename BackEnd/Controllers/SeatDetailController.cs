@@ -89,6 +89,27 @@ namespace BackEnd.Controllers
             return new JsonResult(seatDetail);
         }
 
+        [HttpGet("GetBySeat/{id}")]
+        public JsonResult GetBySeat(int id)
+        {
+
+            List<TblSeatDetail> seatDetails = new List<TblSeatDetail>();
+            seatDetails = seatDetailDAL.GetAll().ToList();
+
+            List<TblSeatDetail> result = new List<TblSeatDetail>();
+
+            foreach (TblSeatDetail detail in seatDetails)
+            {
+                if (detail.SEAT_ID == id)
+                {
+                    result.Add(detail);
+                }
+            }
+
+
+            return new JsonResult(result);
+        }
+
         #endregion
     }
 }
