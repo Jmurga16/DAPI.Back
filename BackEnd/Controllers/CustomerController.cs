@@ -23,7 +23,8 @@ namespace BackEnd.Controllers
                 CustomerName = customer.CustomerName,
                 CustomerAddress = customer.CustomerAddress,
                 EmailAddress = customer.EmailAddress,
-                PhoneNumber = customer.PhoneNumber
+                PhoneNumber = customer.PhoneNumber,
+                Active = customer.Active,
             };
         }
 
@@ -36,7 +37,8 @@ namespace BackEnd.Controllers
                 CustomerName = customer.CustomerName,
                 CustomerAddress = customer.CustomerAddress,
                 EmailAddress = customer.EmailAddress,
-                PhoneNumber = customer.PhoneNumber
+                PhoneNumber = customer.PhoneNumber,
+                Active = customer.Active,
             };
         }
 
@@ -50,15 +52,11 @@ namespace BackEnd.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            List<TblCustomer> customers = new List<TblCustomer>();
-            customers = customerDAL.GetAll().ToList();
 
-            List<CustomerModel> result = new List<CustomerModel>();
-            foreach (TblCustomer customer in customers)
-            {
-                result.Add(Convert(customer));
-            }
-            return new JsonResult(result);
+            List<TblCustomer> customers = new List<TblCustomer>();
+            customers = customerDAL.GetAll().Where(a => a.Active).ToList();
+
+            return new JsonResult(customers);
         }
 
         [HttpGet("{id}")]
@@ -94,7 +92,8 @@ namespace BackEnd.Controllers
         public JsonResult Delete(int id)
         {
             TblCustomer customer = new TblCustomer { CustomerId = id };
-            customerDAL.Remove(customer);
+            customerDAL.Delete(id);
+
             return new JsonResult(customer);
         }
     }

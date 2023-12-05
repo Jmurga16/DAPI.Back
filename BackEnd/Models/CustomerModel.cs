@@ -9,6 +9,8 @@ namespace BackEnd.Models
         public string CustomerAddress { get; set; } = null!;
         public string EmailAddress { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
+        public bool Active { get; set; }
+
     }
 }
 
