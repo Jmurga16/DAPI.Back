@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Entities.Entities
+﻿using Entities.Entities;
+using System;
+namespace BackEnd.Models
 {
-    public partial class TblLog
-    {
+	public class LogModel
+	{
         public int LogId { get; set; }
         public int EmployeeId { get; set; }
         public string? LogDescription { get; set; }
         public DateTime DateTime { get; set; }
-
-        public virtual TblEmployee? Employee { get; set; } = null!;
+        public TblEmployee? Employee { get; set; } = null!;
     }
 }
+
