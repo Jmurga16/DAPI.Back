@@ -119,6 +119,18 @@ namespace BackEnd.Controllers
 
         }
 
+        [HttpPost("change/{id}/{password}")]
+        public JsonResult ChangePassword(int id,string password)
+        {
+            bool result = false;
+            
+            result = employeeDAL.ChangePassword(id,password);
+            
+            return new JsonResult(result);
+
+        }
+
+
         private void SendEmail(MailRequest request)
         {
             senderService.SendEmailAsync(request);

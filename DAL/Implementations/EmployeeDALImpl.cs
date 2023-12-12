@@ -130,6 +130,29 @@ namespace DAL.Implementations
             return result;
         }
 
+        public bool ChangePassword(int id,string password)
+        {
+            bool result = false;
+            TblEmployee entity;
+
+            try
+            {
+                using (WorkUnit<TblEmployee> unit = new WorkUnit<TblEmployee>(context))
+                {
+                    entity = unit.genericDAL.Get(id);
+                    entity.Password = password;
+
+                    unit.genericDAL.Update(entity);
+                    result = unit.Complete();
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+
     }
 }
 
