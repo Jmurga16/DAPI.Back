@@ -1,11 +1,10 @@
 ﻿using BackEnd.Models;
+using BackEnd.Services;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Net.Mail;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace BackEnd.Controllers
 {
@@ -14,7 +13,7 @@ namespace BackEnd.Controllers
     public class LoginController : ControllerBase
     {
         private IEmployeeDAL employeeDAL;
-
+        private IEmailSenderService senderService;
         TblEmployee Convert(EmployeeModel employee)
         {
             return new TblEmployee
@@ -87,6 +86,42 @@ namespace BackEnd.Controllers
 
             return new JsonResult(new { success = result, employeeId = IdEmployee });
 
+        }
+
+        [HttpPost("recover/{correo}")]
+        public JsonResult RecoverPassword(string correo)
+        {
+            bool result = false;
+            var IdEmployee = 0;
+            var password = "";
+
+            List<TblEmployee> employees = new List<TblEmployee>();
+            employees = employeeDAL.GetAll().ToList();
+
+            foreach (TblEmployee employee in employees)
+            {
+                if (employee.EmailAddress == correo)
+                {
+                    IdEmployee = employee.EmployeeId;
+                    password = employee.Password;
+                    result = true;
+                }
+            }
+
+            MailRequest request = new MailRequest();
+            request.Email = correo;
+            request.Subject = "Recover Password";
+            request.Body = "Your password is: " + password;
+
+            //SendEmail(request);
+
+            return new JsonResult(new { success = result, employeeId = IdEmployee, password = password });
+
+        }
+
+        private void SendEmail(MailRequest request)
+        {
+            senderService.SendEmailAsync(request);
         }
 
     }
