@@ -337,6 +337,9 @@ namespace Entities.Entities
                 entity.Property(e => e.DESCRIPTION)
                     .HasColumnName("DESCRIPTION");
 
+                entity.Property(e => e.Active)
+                    .HasColumnName("ACTIVE");
+
             });
 
             OnModelCreatingPartial(modelBuilder);

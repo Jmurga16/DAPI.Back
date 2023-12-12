@@ -94,10 +94,23 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("Select")]
-        public JsonResult GetSelect()
+        public JsonResult GetSelect(string? term)
         {
             List<TblAccountCatalog> accounts = new List<TblAccountCatalog>();
-            accounts = accountDAL.GetAll().ToList();
+            if (term != null)
+            {
+                accounts = accountDAL.GetAll()
+                        .Where(a => a.Active)
+                        .Where(a => a.AccountCode.Contains(term))
+                        .ToList();
+            }            
+            else
+            {
+                accounts = accountDAL.GetAll()
+                        .Where(a => a.Active)
+                        .ToList();
+            }
+
 
             List<AccountSelectResponseModel> result = new List<AccountSelectResponseModel>();
             foreach (TblAccountCatalog account in accounts)

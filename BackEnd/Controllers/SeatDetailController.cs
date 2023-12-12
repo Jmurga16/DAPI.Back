@@ -26,7 +26,8 @@ namespace BackEnd.Controllers
                 SEAT_ID = entity.SEAT_ID,
                 ACCOUNT_ID = entity.ACCOUNT_ID,
                 AMOUNT = entity.AMOUNT,
-                DESCRIPTION = entity.DESCRIPTION
+                DESCRIPTION = entity.DESCRIPTION,
+                Active = entity.Active
             };
         }
 
@@ -38,7 +39,8 @@ namespace BackEnd.Controllers
                 SEAT_ID = entity.SEAT_ID,
                 ACCOUNT_ID = entity.ACCOUNT_ID,
                 AMOUNT = entity.AMOUNT,
-                DESCRIPTION = entity.DESCRIPTION
+                DESCRIPTION = entity.DESCRIPTION,
+                Active = entity.Active
             };
         }
 
@@ -47,14 +49,10 @@ namespace BackEnd.Controllers
         public JsonResult Get()
         {
             List<TblSeatDetail> seatDetails = new List<TblSeatDetail>();
-            seatDetails = seatDetailDAL.GetAll().ToList();
+            seatDetails = seatDetailDAL.GetAll().Where(a => a.Active).ToList();
 
-            List<SeatDetailModel> result = new List<SeatDetailModel>();
-            foreach (TblSeatDetail seatDetail in seatDetails)
-            {
-                result.Add(Convert(seatDetail));
-            }
-            return new JsonResult(result);
+
+            return new JsonResult(seatDetails);
         }
 
         [HttpGet("{id}")]
@@ -94,7 +92,7 @@ namespace BackEnd.Controllers
         {
 
             List<TblSeatDetail> seatDetails = new List<TblSeatDetail>();
-            seatDetails = seatDetailDAL.GetAll().ToList();
+            seatDetails = seatDetailDAL.GetAll().Where(a => a.Active).ToList();
 
             List<TblSeatDetail> result = new List<TblSeatDetail>();
 
